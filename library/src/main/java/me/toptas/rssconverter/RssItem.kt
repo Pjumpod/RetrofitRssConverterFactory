@@ -18,6 +18,13 @@ class RssItem : Serializable {
     var image: String? = null
     var publishDate: String? = null
     var description: String? = null
+        set(description) {
+            if (description.contains("feedburner")) {
+                field = " "
+            } else {
+                field = description?
+            }
+        }
     var origLink: String? = null
 
 
