@@ -18,6 +18,7 @@ class RssItem : Serializable {
     var image: String? = null
     var publishDate: String? = null
     var description: String? = null
+    var origLink: String? = null
 
 
     override fun toString(): String {
@@ -31,6 +32,9 @@ class RssItem : Serializable {
         if (image != null) {
             builder.append(image).append("\n")
         }
+        if (origLink != null) {
+            builder.append(description)
+        } else
         if (description != null) {
             builder.append(description)
         }
