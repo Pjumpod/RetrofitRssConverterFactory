@@ -21,8 +21,6 @@ class RssItem : Serializable {
         set(description) {
             if (description.contains("feedburner")) {
                 field = "Click"
-            } else {
-                field = description
             }
         }
     var origLink: String? = null
