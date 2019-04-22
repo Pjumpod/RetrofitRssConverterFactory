@@ -19,7 +19,7 @@ class RssItem : Serializable {
     var publishDate: String? = null
     var description: String? = null
         set(description) {
-            if (description.contains("feedburner")) {
+            if (description?.contains("feedburner")) {
                 field = "Click"
             }
         }
