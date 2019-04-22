@@ -22,7 +22,7 @@ class RssItem : Serializable {
             if (description.contains("feedburner")) {
                 field = " "
             } else {
-                field = description?
+                field = description
             }
         }
     var origLink: String? = null
