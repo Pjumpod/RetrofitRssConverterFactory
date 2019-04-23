@@ -157,6 +157,7 @@ internal class XMLParser : DefaultHandler() {
         private const val DESCRIPTION = "description"
         private const val LINK = "link"
         private const val ATOM_LINK = "atom:link"
+        private const val OriginLink = "feedburner:origLink"
         private const val URL = "url"
         private const val IMAGE = "image"
         private const val PUBLISH_DATE = "pubdate"
