@@ -11,7 +11,8 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.rlContainer, RssFragment.newInstance("https://www.wired.com/feed/"))
+                //.add(R.id.rlContainer, RssFragment.newInstance("https://www.stock2morrow.com/feed/"))
+                .add(R.id.rlContainer, RssFragment.newInstance("http://feeds.feedburner.com/settrade/saaDailyUpdate"))
                 .commit()
 
 

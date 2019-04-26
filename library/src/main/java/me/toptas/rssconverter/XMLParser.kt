@@ -1,5 +1,7 @@
 package me.toptas.rssconverter
 
+import android.drm.DrmStore.DrmObjectType.CONTENT
+import android.util.Log
 import org.xml.sax.Attributes
 import org.xml.sax.SAXException
 import org.xml.sax.helpers.DefaultHandler
@@ -13,6 +15,7 @@ internal class XMLParser : DefaultHandler() {
     private var parsingTitle = false
     private var parsingDescription = false
     private var parsingLink = false
+    private var parsingtmp = false
 
     private var elementValue: String? = null
     private var title = EMPTY_STRING
@@ -20,6 +23,9 @@ internal class XMLParser : DefaultHandler() {
     private var image: String? = null
     private var date: String? = null
     private var description: String? = null
+
+    private var ignorecontent: Boolean? = false
+    private var tmpstring = EMPTY_STRING
 
     private var rssItem: RssItem? = null
     val items = arrayListOf<RssItem>()
@@ -29,19 +35,34 @@ internal class XMLParser : DefaultHandler() {
     override fun startElement(uri: String, localName: String, qName: String,
                               attributes: Attributes?) {
         elementOn = true
+        Log.w("StartElement", localName.toLowerCase() + " " + ignorecontent.toString())
         when (localName.toLowerCase()) {
-            ITEM -> rssItem = RssItem()
+            ITEM, ARTICLES -> if (ignorecontent == false) {rssItem = RssItem()}
             TITLE -> if (!qName.contains(MEDIA)) {
-                parsingTitle = true
-                title = EMPTY_STRING
+                if (ignorecontent == false) {
+                    parsingTitle = true
+                    title = EMPTY_STRING
+                }
             }
-            DESCRIPTION -> {
-                parsingDescription = true
-                description = EMPTY_STRING
+            DESCRIPTION, CONTENT -> {
+                if (ignorecontent == false) {
+                    parsingDescription = true
+                    description = EMPTY_STRING
+                }
             }
-            LINK -> if (qName != ATOM_LINK) {
-                parsingLink = true
-                link = EMPTY_STRING
+            LINK, OriginLink, SOURCEURL -> {
+                if (ignorecontent == false) {
+                    if (qName != ATOM_LINK) {
+                        parsingLink = true
+                        link = EMPTY_STRING
+                    }
+                }
+            }
+
+            rcmArticle, PUBLISHER, COPYRIGHT -> {
+                ignorecontent = true
+                Log.w("ignoreContent", localName.toLowerCase() + " true")
+                parsingtmp = true
             }
         }
 
@@ -56,42 +77,81 @@ internal class XMLParser : DefaultHandler() {
     @Throws(SAXException::class)
     override fun endElement(uri: String, localName: String, qName: String) {
         elementOn = false
+        Log.w("endElement", localName.toLowerCase() + " " + ignorecontent.toString())
+
+        when (localName.toLowerCase()) {
+            rcmArticle, PUBLISHER, COPYRIGHT -> {
+                ignorecontent = false
+                parsingtmp = false
+                elementValue = EMPTY_STRING
+                tmpstring = EMPTY_STRING
+                Log.w("tmpString", tmpstring)
+                Log.w("ignoreContent", localName.toLowerCase() + " false")
+            }
+        }
+
         if (rssItem != null) {
             when (localName.toLowerCase()) {
-                ITEM -> {
-                    rssItem = RssItem()
-                    rssItem?.let {
-                        it.title = title.trim { it <= ' ' }
-                        it.link = link
-                        it.image = image
-                        it.publishDate = date
-                        it.description = description
-                        if (image == null && description != null && getImageSourceFromDescription(description) != null) {
-                            it.image = getImageSourceFromDescription(description!!)
+                ITEM, ARTICLES -> {
+                    if (ignorecontent == false) {
+                        rssItem = RssItem()
+                        rssItem?.let {
+                            it.title = title.trim { it <= ' ' }
+                            it.link = link
+                            it.image = image
+                            it.publishDate = date
+                            it.description = description
+                            if (image == null && description != null && getImageSourceFromDescription(description) != null) {
+                                it.image = getImageSourceFromDescription(description!!)
+                            }
+                            items.add(it)
                         }
-                        items.add(it)
+                        Log.w("final title: ", title)
+                        if (description != null) {
+                            Log.w("final desc: ", description)
+                        }
+                        if (link != null) {
+                            Log.w("final link: ", link)
+                        }
+                        if (image != null) {
+                            Log.w("final image: ", image)
+                        }
+                        link = EMPTY_STRING
+                        image = null
+                        date = EMPTY_STRING
                     }
-                    link = EMPTY_STRING
-                    image = null
-                    date = EMPTY_STRING
                 }
-                TITLE -> if (!qName.contains(MEDIA)) {
-                    parsingTitle = false
-                    elementValue = EMPTY_STRING
-                    title = removeNewLine(title)
-                }
-                LINK -> if (elementValue?.isNotEmpty() == true) {
-                    parsingLink = false
-                    elementValue = EMPTY_STRING
-                    link = removeNewLine(link)
-                }
-                IMAGE, URL -> if (elementValue != null && elementValue?.isNotEmpty() == true) {
-                    image = elementValue
-                }
-                PUBLISH_DATE -> date = elementValue
-                DESCRIPTION -> {
-                    parsingDescription = false
-                    elementValue = EMPTY_STRING
+                TITLE ->
+                    if (ignorecontent == false) {
+                        if (!qName.contains(MEDIA)) {
+                            parsingTitle = false
+                            elementValue = EMPTY_STRING
+                            title = removeNewLine(title)
+                        }
+                    }
+                LINK, OriginLink, SOURCEURL ->
+                    if (ignorecontent == false) {
+                        if (elementValue?.isNotEmpty() == true) {
+                            parsingLink = false
+                            elementValue = EMPTY_STRING
+                            link = removeNewLine(link)
+                            Log.w("link2", link)
+                        }
+                    }
+                IMAGE, URL ->
+                    if (ignorecontent == false) {
+                        if (elementValue != null && elementValue?.isNotEmpty() == true) {
+                            image = elementValue
+                            Log.w("image2", image)
+                        }
+                    }
+                PUBLISH_DATE, PUBLISH_TIME -> date = elementValue
+                DESCRIPTION, CONTENT -> {
+                    if (ignorecontent == false) {
+                        parsingDescription = false
+                        elementValue = EMPTY_STRING
+                        Log.w("des2", description)
+                    }
                 }
             }
         }
@@ -114,6 +174,9 @@ internal class XMLParser : DefaultHandler() {
         }
         if (parsingLink) {
             link = link!! + buff
+        }
+        if (parsingtmp) {
+            tmpstring = tmpstring!! + buff
         }
     }
 
@@ -157,9 +220,17 @@ internal class XMLParser : DefaultHandler() {
         private const val DESCRIPTION = "description"
         private const val LINK = "link"
         private const val ATOM_LINK = "atom:link"
-        private const val OriginLink = "feedburner:origLink"
+        private const val OriginLink = "feedburner:origlink"
         private const val URL = "url"
         private const val IMAGE = "image"
         private const val PUBLISH_DATE = "pubdate"
+        private const val PUBLISH_TIME = "publishTime"
+        private const val CONTENTS = "contents"
+        private const val CONTENT = "content"
+        private const val SOURCEURL = "sourceurl"
+        private const val ARTICLES = "article"
+        private const val rcmArticle ="recommendarticles"
+        private const val PUBLISHER = "publisher"
+        private const val COPYRIGHT = "copyright"
     }
 }
