@@ -1,10 +1,10 @@
 package me.toptas.rssconverter
 
-import android.drm.DrmStore.DrmObjectType.CONTENT
 import android.util.Log
 import org.xml.sax.Attributes
 import org.xml.sax.SAXException
 import org.xml.sax.helpers.DefaultHandler
+import org.jsoup.Jsoup
 
 /**
  * RSS Feed XML parser
@@ -44,7 +44,7 @@ internal class XMLParser : DefaultHandler() {
                     title = EMPTY_STRING
                 }
             }
-            DESCRIPTION, CONTENT, CONTENTEC, ENCODED -> {
+            DESCRIPTION, CONTENT -> {
                 if (ignorecontent == false) {
                     parsingDescription = true
                     description = EMPTY_STRING
@@ -104,6 +104,10 @@ internal class XMLParser : DefaultHandler() {
                             if (image == null && description != null && getImageSourceFromDescription(description) != null) {
                                 it.image = getImageSourceFromDescription(description!!)
                             }
+                            if (it.image == null && link != null && getImageSourceFromMeta(link) != null)
+                            {
+                                it.image = getImageSourceFromMeta(link)
+                            }
                             items.add(it)
                         }
                         Log.w("final title: ", title)
@@ -146,7 +150,7 @@ internal class XMLParser : DefaultHandler() {
                         }
                     }
                 PUBLISH_DATE, PUBLISH_TIME -> date = elementValue
-                DESCRIPTION, CONTENT, CONTENTEC, ENCODED -> {
+                DESCRIPTION, CONTENT -> {
                     if (ignorecontent == false) {
                         parsingDescription = false
                         elementValue = EMPTY_STRING
@@ -206,6 +210,52 @@ internal class XMLParser : DefaultHandler() {
         return null
     }
 
+    private fun getImageSourceFromMeta(urlToParse: String?): String? {
+        var src: String? = null
+        try {
+            val response = Jsoup.connect(urlToParse)
+                    .ignoreContentType(true)
+                    .userAgent("Chrome")
+                    .referrer("http://www.google.com")
+                    .timeout(12000)
+                    .followRedirects(true)
+                    .execute()
+            val doc = response.parse()
+            val ogTags = doc.select("meta[property^=og:]")
+            when {
+                ogTags.size > 0 ->
+                    ogTags.forEachIndexed { index, _ ->
+                        val tag = ogTags[index]
+                        val text = tag.attr("property")
+                        when (text) {
+                            "og:image" -> {
+                                src = (tag.attr("content"))
+                            }
+                            /*
+                            "og:description" -> {
+                                linkSourceContent.ogDescription = (tag.attr("content"))
+                            }
+                            "og:url" -> {
+                                linkSourceContent.ogUrl = (tag.attr("content"))
+                            }
+                            "og:title" -> {
+                                linkSourceContent.ogTitle = (tag.attr("content"))
+                            }
+                            "og:site_name" -> {
+                                linkSourceContent.ogSiteName = (tag.attr("content"))
+                            }
+                            "og:type" -> {
+                                linkSourceContent.ogType = (tag.attr("content"))
+                            } */
+                        }
+                    }
+            }
+            return src
+        } catch (e: Exception) {
+            Log.w("Exception", e.toString())
+            return null
+        }
+    }
 
     private fun removeNewLine(s: String?): String {
         return s?.replace("\n", "") ?: EMPTY_STRING
@@ -232,7 +282,5 @@ internal class XMLParser : DefaultHandler() {
         private const val rcmArticle ="recommendarticles"
         private const val PUBLISHER = "publisher"
         private const val COPYRIGHT = "copyright"
-        private const val CONTENTEC = "content:encoded"
-        private const val ENCODED = "encoded"
     }
 }
