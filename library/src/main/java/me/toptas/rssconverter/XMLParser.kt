@@ -25,7 +25,7 @@ internal class XMLParser : DefaultHandler() {
     private var description: String? = null
 
     private var ignorecontent: Boolean? = false
-    private var tmpstring = EMPTY_STRING
+    private var tmpstring: String? = null
 
     private var rssItem: RssItem? = null
     val items = arrayListOf<RssItem>()
@@ -44,7 +44,7 @@ internal class XMLParser : DefaultHandler() {
                     title = EMPTY_STRING
                 }
             }
-            DESCRIPTION, CONTENT -> {
+            DESCRIPTION, CONTENT, CONTENTEC -> {
                 if (ignorecontent == false) {
                     parsingDescription = true
                     description = EMPTY_STRING
@@ -146,7 +146,7 @@ internal class XMLParser : DefaultHandler() {
                         }
                     }
                 PUBLISH_DATE, PUBLISH_TIME -> date = elementValue
-                DESCRIPTION, CONTENT -> {
+                DESCRIPTION, CONTENT, CONTENTEC -> {
                     if (ignorecontent == false) {
                         parsingDescription = false
                         elementValue = EMPTY_STRING
@@ -232,5 +232,6 @@ internal class XMLParser : DefaultHandler() {
         private const val rcmArticle ="recommendarticles"
         private const val PUBLISHER = "publisher"
         private const val COPYRIGHT = "copyright"
+        private const val CONTENTEC = "encoded"
     }
 }
