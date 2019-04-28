@@ -61,6 +61,7 @@ internal class XMLParser : DefaultHandler() {
 
             rcmArticle, PUBLISHER, COPYRIGHT -> {
                 ignorecontent = true
+                tmpstring = EMPTY_STRING
                 Log.w("ignoreContent", localName.toLowerCase() + " true")
                 parsingtmp = true
             }
