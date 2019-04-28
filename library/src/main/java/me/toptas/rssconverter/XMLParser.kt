@@ -44,7 +44,7 @@ internal class XMLParser : DefaultHandler() {
                     title = EMPTY_STRING
                 }
             }
-            DESCRIPTION, CONTENT, CONTENTEC -> {
+            DESCRIPTION, CONTENT, CONTENTEC, ENCODED -> {
                 if (ignorecontent == false) {
                     parsingDescription = true
                     description = EMPTY_STRING
@@ -146,7 +146,7 @@ internal class XMLParser : DefaultHandler() {
                         }
                     }
                 PUBLISH_DATE, PUBLISH_TIME -> date = elementValue
-                DESCRIPTION, CONTENT, CONTENTEC -> {
+                DESCRIPTION, CONTENT, CONTENTEC, ENCODED -> {
                     if (ignorecontent == false) {
                         parsingDescription = false
                         elementValue = EMPTY_STRING
@@ -232,6 +232,7 @@ internal class XMLParser : DefaultHandler() {
         private const val rcmArticle ="recommendarticles"
         private const val PUBLISHER = "publisher"
         private const val COPYRIGHT = "copyright"
-        private const val CONTENTEC = "encoded"
+        private const val CONTENTEC = "content:encoded"
+        private const val ENCODED = "encoded"
     }
 }
