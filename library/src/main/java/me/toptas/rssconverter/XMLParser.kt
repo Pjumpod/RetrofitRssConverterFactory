@@ -138,7 +138,7 @@ internal class XMLParser : DefaultHandler() {
                             Log.w("link2", link)
                         }
                     }
-                IMAGE, URL ->
+                IMAGE, URL, THUMBNAIL ->
                     if (ignorecontent == false) {
                         if (elementValue != null && elementValue?.isNotEmpty() == true) {
                             image = elementValue
@@ -224,12 +224,13 @@ internal class XMLParser : DefaultHandler() {
         private const val IMAGE = "image"
         private const val PUBLISH_DATE = "pubdate"
         private const val PUBLISH_TIME = "publishTime"
-        private const val CONTENTS = "contents"
+        //private const val CONTENTS = "contents"
         private const val CONTENT = "content"
         private const val SOURCEURL = "sourceurl"
         private const val ARTICLES = "article"
         private const val rcmArticle ="recommendarticles"
         private const val PUBLISHER = "publisher"
         private const val COPYRIGHT = "copyright"
+        private const val THUMBNAIL = "thumbnail"
     }
 }
