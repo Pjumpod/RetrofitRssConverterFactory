@@ -68,7 +68,7 @@ internal class XMLParser : DefaultHandler() {
 
         if (attributes != null) {
             val url = attributes.getValue(URL)
-            if (url != null && !url.isEmpty()) {
+            if (url != null && !url.isEmpty() && (url.contains("jpg") || url.contains("gif") || url.contains("bmp") || url.contains("png"))) {
                 image = url
                 Log.w("get image: ", image)
             }
