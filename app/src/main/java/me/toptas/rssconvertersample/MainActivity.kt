@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         //var URLfeed = "https://www.moneybuffalo.in.th/category/%E0%B8%AB%E0%B8%B8%E0%B9%89%E0%B8%99/feed"
         //var URLfeed = "http://feeds.feedburner.com/Setorth-Xd"
-        var URLfeed = "http://feeds.feedburner.com/Setorth-Xd"
+        var URLfeed = "http://news.thaipbs.or.th/rss/news/economy"
         supportFragmentManager
                 .beginTransaction()
                 .add(R.id.rlContainer, RssFragment.newInstance( URLfeed))
