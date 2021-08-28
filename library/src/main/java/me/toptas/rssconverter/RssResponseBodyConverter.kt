@@ -1,5 +1,6 @@
 package me.toptas.rssconverter
 
+import android.util.Log
 import org.xml.sax.InputSource
 import javax.xml.parsers.SAXParserFactory
 
@@ -18,7 +19,11 @@ internal class RssResponseBodyConverter : Converter<ResponseBody, RssFeed> {
             val xmlReader = saxParser.xmlReader
             xmlReader.contentHandler = parser
             val inputSource = InputSource(value.charStream())
-            xmlReader.parse(inputSource)
+            try {
+                xmlReader.parse(inputSource)
+            } catch(e: Exception) {
+                Log.e("error","here")
+            }
             val items = parser.items
             rssFeed.items = items
         } catch (e: Exception) {

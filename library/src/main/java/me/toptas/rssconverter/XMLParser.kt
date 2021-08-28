@@ -70,8 +70,19 @@ internal class XMLParser : DefaultHandler() {
             val url = attributes.getValue(URL)
             if (url != null && !url.isEmpty()) {
                 image = url
+                Log.w("get image: ", image)
             }
         }
+
+        if (localName.toLowerCase() == "image") {
+            Log.w("come here: ", "Yes")
+            val href:String? = attributes?.getValue(HREF)
+            if (href != null && !href.isEmpty() && href.contains("jpg") ) {
+                image = href
+                Log.w("come here too: ", image)
+            }
+        }
+
     }
 
     @Throws(SAXException::class)
@@ -98,14 +109,15 @@ internal class XMLParser : DefaultHandler() {
                         rssItem?.let {
                             it.title = title.trim { it <= ' ' }
                             it.link = link
-                            it.image = "itunes:image"
                             it.image = image
+                            //Log.w("pic_1: ", it.image)
                             it.publishDate = date
                             it.description = description
 
                             if (image == null && description != null && getImageSourceFromDescription(description) != null) {
                                 it.image = getImageSourceFromDescription(description!!)
                             }
+                            //Log.w("pic_2: ", it.image)
                             items.add(it)
                         }
                         Log.w("final title: ", title)
@@ -129,6 +141,7 @@ internal class XMLParser : DefaultHandler() {
                             parsingTitle = false
                             elementValue = EMPTY_STRING
                             title = removeNewLine(title)
+                            Log.w("title: ", title)
                         }
                     }
                 LINK, OriginLink, SOURCEURL ->
@@ -140,11 +153,13 @@ internal class XMLParser : DefaultHandler() {
                             Log.w("link2", link)
                         }
                     }
-                IMAGE, URL, THUMBNAIL, "ITUNES:IMAGE" ->
+                IMAGE, URL, THUMBNAIL ->
                     if (ignorecontent == false) {
                         if (elementValue != null && elementValue?.isNotEmpty() == true) {
-                            image = elementValue
-                            Log.w("image2", image)
+                            if (elementValue?.toLowerCase()!!.contains("http")) {
+                                image = elementValue
+                                Log.w("image2", image)
+                            }
                         }
                     }
                 PUBLISH_DATE, PUBLISH_TIME -> date = elementValue
@@ -155,6 +170,8 @@ internal class XMLParser : DefaultHandler() {
                         Log.w("des2", description)
                     }
                 }
+                SYSBOL -> { Log.w("move on", "gogo")}
+
             }
         }
     }
@@ -190,22 +207,7 @@ internal class XMLParser : DefaultHandler() {
      * @return Image url
      */
     private fun getImageSourceFromDescription(description: String?): String? {
-        if (description?.contains("itunes:image") == true && description.contains("href")) {
-            val parts = description.split("href=\"".toRegex())
-                    .dropLastWhile { it.isEmpty() }
-                    .toTypedArray()
-            if (parts.size == 2 && parts[1].isNotEmpty()) {
-                var src = parts[1].substring(0, parts[1].indexOf("\""))
-                val srcParts = src.split("http".toRegex())
-                        .dropLastWhile { it.isEmpty() }
-                        .toTypedArray() // can be removed
-                if (srcParts.size > 2) {
-                    src = "http" + srcParts[2]
-                }
-                return src
-            }
-        }
-        
+        Log.w("see here",description)
         if (description?.contains("<img") == true && description.contains("src")) {
             val parts = description.split("src=\"".toRegex())
                     .dropLastWhile { it.isEmpty() }
@@ -218,6 +220,7 @@ internal class XMLParser : DefaultHandler() {
                 if (srcParts.size > 2) {
                     src = "http" + srcParts[2]
                 }
+                Log.w("---|",src)
                 return src
             }
         }
@@ -240,6 +243,8 @@ internal class XMLParser : DefaultHandler() {
         private const val ATOM_LINK = "atom:link"
         private const val OriginLink = "feedburner:origlink"
         private const val URL = "url"
+        private const val HREF = "href"
+        private const val SRC = "src"
         private const val IMAGE = "image"
         private const val PUBLISH_DATE = "pubdate"
         private const val PUBLISH_TIME = "publishTime"
@@ -251,5 +256,6 @@ internal class XMLParser : DefaultHandler() {
         private const val PUBLISHER = "publisher"
         private const val COPYRIGHT = "copyright"
         private const val THUMBNAIL = "thumbnail"
+        private const val SYSBOL = "sysbol"
     }
 }

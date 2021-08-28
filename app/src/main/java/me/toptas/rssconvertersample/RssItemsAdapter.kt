@@ -1,6 +1,7 @@
 package me.toptas.rssconvertersample
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,10 +43,9 @@ internal class RssItemsAdapter(private val listener: OnItemClickListener) : Recy
         holder.apply {
             textTitle.text = item.title
             textPubDate.text = item.publishDate
-
-            if (item.image != null) {
+            if (item.image != null && (item.image!!.contains("http"))) {
                 Picasso.get()
-                        .load(item.image)
+                        .load(item.image!!)
                         .fit()
                         .centerCrop()
                         .into(imageThumb)
