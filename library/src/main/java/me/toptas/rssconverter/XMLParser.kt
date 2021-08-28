@@ -101,6 +101,7 @@ internal class XMLParser : DefaultHandler() {
                             it.image = image
                             it.publishDate = date
                             it.description = description
+                            it.image = itunes:image
                             if (image == null && description != null && getImageSourceFromDescription(description) != null) {
                                 it.image = getImageSourceFromDescription(description!!)
                             }
@@ -188,6 +189,22 @@ internal class XMLParser : DefaultHandler() {
      * @return Image url
      */
     private fun getImageSourceFromDescription(description: String?): String? {
+        if (description?.contains("itunes:image") == true && description.contains("href")) {
+            val parts = description.split("href=\"".toRegex())
+                    .dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+            if (parts.size == 2 && parts[1].isNotEmpty()) {
+                var src = parts[1].substring(0, parts[1].indexOf("\""))
+                val srcParts = src.split("http".toRegex())
+                        .dropLastWhile { it.isEmpty() }
+                        .toTypedArray() // can be removed
+                if (srcParts.size > 2) {
+                    src = "http" + srcParts[2]
+                }
+                return src
+            }
+        }
+        
         if (description?.contains("<img") == true && description.contains("src")) {
             val parts = description.split("src=\"".toRegex())
                     .dropLastWhile { it.isEmpty() }
@@ -203,6 +220,7 @@ internal class XMLParser : DefaultHandler() {
                 return src
             }
         }
+        
         return null
     }
 
