@@ -98,10 +98,11 @@ internal class XMLParser : DefaultHandler() {
                         rssItem?.let {
                             it.title = title.trim { it <= ' ' }
                             it.link = link
+                            it.image = "itunes:image"
                             it.image = image
                             it.publishDate = date
                             it.description = description
-                            it.image = itunes:image
+
                             if (image == null && description != null && getImageSourceFromDescription(description) != null) {
                                 it.image = getImageSourceFromDescription(description!!)
                             }
