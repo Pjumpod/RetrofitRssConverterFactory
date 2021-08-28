@@ -138,7 +138,7 @@ internal class XMLParser : DefaultHandler() {
                             Log.w("link2", link)
                         }
                     }
-                IMAGE, URL, THUMBNAIL ->
+                IMAGE, URL, THUMBNAIL, "ITUNES:IMAGE" ->
                     if (ignorecontent == false) {
                         if (elementValue != null && elementValue?.isNotEmpty() == true) {
                             image = elementValue
