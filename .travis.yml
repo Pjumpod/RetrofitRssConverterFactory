@@ -2,9 +2,7 @@ sudo: required
 language: android
 
 dist: Focal
-jdk: 
-  openjdk11
-  oraclejdk11
+jdk: openjdk11
     
 android:
   licenses:
