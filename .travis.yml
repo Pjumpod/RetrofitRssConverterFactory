@@ -24,11 +24,10 @@ before_script:
   - mkdir .android
   - touch .android/repositories.cfg
   - mkdir .android/avd
-  - sdkmanager --sdk_root=/usr/local/android-sdk/tools/bin/ "tools"
-  - sdkmanager --sdk_root=/usr/local/android-sdk/tools/bin/ "system-images;android-30;google_apis;x86"
-  - sdkmanager --sdk_root=/usr/local/android-sdk/tools/bin/ "build-tools;30.0.2"
-  - sdkmanager --sdk_root=/usr/local/android-sdk/tools/bin/ "platforms;android-30"
-  - sdkmanager --sdk_root=/usr/local/android-sdk/tools/bin/ --licenses
+  - sdkmanager "system-images;android-30;google_apis;x86"
+  - sdkmanager "build-tools;30.0.2"
+  - sdkmanager "platforms;android-30"
+  - sdkmanager --licenses
   - export PATH=$PATH:/usr/local/android-sdk/tools/bin/
   - chmod +x ./gradlew
   - cd /usr/local/android-sdk/tools/bin/
