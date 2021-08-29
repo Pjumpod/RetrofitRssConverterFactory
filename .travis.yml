@@ -42,6 +42,7 @@ android:
     - addon-google_apis-google-19
     
 before_install:
+  - chmod +x gradlew
   - yes | sdkmanager "platforms;android-28"
 
 install: skip
