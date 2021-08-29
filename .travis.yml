@@ -1,7 +1,7 @@
 sudo: required
 language: generic
 
-dist: trusty
+dist: Focal
 jdk: 
   openjdk11
   oraclejdk11
