@@ -22,6 +22,7 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-22
+    - addon-google_apis-google-19
  
 before_install:
   - chmod +x gradlew
