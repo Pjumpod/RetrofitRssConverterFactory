@@ -54,7 +54,7 @@ before_script:
   - ls -l
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --list
   - ./avdmanager list
-  - echo no | ./avdmanager create avd -n test -k "system-images;android-30;google_apis;x86" --device "Pixel_4" -b x86 -c 100M -d 7 -f
+  - echo no | ./avdmanager -v create avd -n test -k "system-images;android-30;google_apis;x86" --device "Pixel_4" -b x86 -c 100M -d 7 -f
   - cd $HERE
   - $ANDROID_HOME/emulator/emulator -avd test -no-window &
   - bash android-wait-for-emulator
