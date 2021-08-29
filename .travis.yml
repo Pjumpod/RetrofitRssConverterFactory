@@ -41,7 +41,7 @@ before_script:
   - set -o pipefail
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "build-tools;30.0.2"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "platforms;android-30"
-  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "system-images;android-30;google_apis;armeabi-v7a"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "system-images;android-30;google_apis;x86"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "platform-tools"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "build-tools;30.0.2"
   - export PATH=$PATH:${ANDROID_HOME}/platform-tools/
