@@ -30,7 +30,7 @@ before_script:
   - install -d $ANDROID_HOME
   - wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
   - pushd $ANDROID_HOME
-  - unzip -d cmdline-tools cmdline-tools.zip
+  - unzip cmdline-tools.zip
   - popd
   - ls -l ${ANDROID_HOME}
   - ls -l ${ANDROID_HOME}/cmdline-tools/
