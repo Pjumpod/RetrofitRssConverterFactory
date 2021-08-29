@@ -26,7 +26,7 @@ android:
 before_script:
   - sudo apt-get update --yes
   - sudo apt-get install --yes wget tar unzip lib32stdc++6 lib32z1
-  - export ANDROID_HOME=${PWD}android-home
+  - export ANDROID_HOME=${PWD}/android-home
   - install -d $ANDROID_HOME
   - wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
   - pushd $ANDROID_HOME
@@ -35,8 +35,9 @@ before_script:
   - ls -l ${ANDROID_HOME}
   - ls -l ${ANDROID_HOME}/cmdline-tools/
   - ls -l ${ANDROID_HOME}/cmdline-tools/bin/
-  - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/bin/
-  - chmod +x ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager
+  - move ${ANDROID_HOME}/cmdline-tools/bin ${ANDROID_HOME}/cmdline-tools/latest
+  - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/latest/
+  - chmod +x ${ANDROID_HOME}/cmdline-tools/latest/sdkmanager
   - sdkmanager --version
   - set +o pipefail
   - yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
