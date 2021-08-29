@@ -16,12 +16,12 @@ android:
     - tools
     - build-tools-30.0.2
     - tools
-    - android-25
-    - android-22
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-19
+  matrix:
+    - EMULATOR_API=22
+    - EMULATOR_API=25
  
 before_install:
   - chmod +x gradlew
@@ -30,19 +30,16 @@ before_install:
   
 install:
   - export ANDROID_HOME=~/android-sdk-linux
-  - wget -q "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip" -O android-sdk-tools.zip
+  - wget -q "https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip" -O android-sdk-tools.zip
   - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
   - rm android-sdk-tools.zip
-  - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+  - PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/bin:${ANDROID_HOME}/cmdline-tools/tools/bin
+  - chmod +x ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager
+  - yes | sudo sdkmanager --licenses
   - ./gradlew dependencies || true
   - ./gradle assemble || true
   - sdkmanager --list | head -20
-  - sdkmanager "build-tools;$BUILD_TOOLS_VERSION" "platforms;android-$25" > /dev/null
   - sdkmanager "system-images;android-$EMULATOR_API;$ABI" > /dev/null
-  - sdkmanager --list | head -15
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 
 before_script:
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_API;$ABI"
