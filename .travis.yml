@@ -22,16 +22,13 @@ android:
   matrix:
     - EMULATOR_API=22
     - EMULATOR_API=25
-    
-variables:
-  ANDROID_SDK_TOOLS: "7583922"
  
 before_script:
   - sudo apt-get update --yes
   - sudo apt-get install --yes wget tar unzip lib32stdc++6 lib32z1
   - export ANDROID_HOME=${PWD}android-home
   - install -d $ANDROID_HOME
-  - wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
+  - wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
   - pushd $ANDROID_HOME
   - unzip -d cmdline-tools cmdline-tools.zip
   - popd
