@@ -22,26 +22,29 @@ android:
   matrix:
     - EMULATOR_API=22
     - EMULATOR_API=25
+    
+variables:
+  ANDROID_SDK_TOOLS: "7583922"
  
-before_install:
-  - chmod +x gradlew
-  - chmod +x android-wait-for-emulator
-  - echo $JAVA_HOME
-  
-install:
-  - export ANDROID_HOME=~/android-sdk-linux
-  - wget -q "https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip" -O android-sdk-tools.zip
-  - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
-  - rm android-sdk-tools.zip
-  - PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/bin:${ANDROID_HOME}/cmdline-tools/tools/bin
-  - chmod +x ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager
-  - yes | sudo sdkmanager --licenses
-  - ./gradlew dependencies || true
-  - ./gradle assemble || true
-  - sdkmanager --list | head -20
-  - sdkmanager "system-images;android-$EMULATOR_API;$ABI" > /dev/null
-
 before_script:
+  - apt-get update --yes
+  - apt-get install --yes wget tar unzip lib32stdc++6 lib32z1
+  - export ANDROID_HOME=${PWD}android-home
+  - install -d $ANDROID_HOME
+  - wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
+  - pushd $ANDROID_HOME
+  - unzip -d cmdline-tools cmdline-tools.zip
+  - popd
+  - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/bin/
+  - sdkmanager --version
+  - set +o pipefail
+  - yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
+  - set -o pipefail
+  - sdkmanager --sdk_root=${ANDROID_HOME} "platforms;android-${ANDROID_COMPILE_SDK}"
+  - sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools"
+  - sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;${ANDROID_BUILD_TOOLS}"
+  - export PATH=$PATH:${ANDROID_HOME}/platform-tools/
+  - chmod +x ./gradlew
   - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_API;$ABI"
   - $ANDROID_HOME/emulator/emulator -avd test -no-window &
   - bash android-wait-for-emulator
