@@ -51,6 +51,7 @@ before_script:
   - chmod +x ./gradlew
   - cd ${ANDROID_HOME}/cmdline-tools/latest/bin/
   - export sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/
+  - ls -l
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --list
   - ./avdmanager list
   - echo no | ./avdmanager create avd -n test -k "system-images;android-30;google_apis;x86" --device "Pixel_4" -b x86 -c 100M -d 7 -f
