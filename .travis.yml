@@ -48,11 +48,11 @@ before_script:
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "platforms;android-30"
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/latest/bin/platform-tools/
-  - chmod +x ./gradlew
   - cd ${ANDROID_HOME}/cmdline-tools/latest/bin/
   - ls -l
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --list
   - cd $HERE
+  - chmod +x ./gradlew
 
 script:
   - ./gradlew assembleDebug
