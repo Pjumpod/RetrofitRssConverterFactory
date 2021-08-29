@@ -43,10 +43,11 @@ before_script:
   - set +o pipefail
   - yes | sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - set -o pipefail
-  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "emulator" "tools" "platform-tools"
-  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "build-tools;30.0.2"
-  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "system-images;android-30;google_apis;x86"
-  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "platforms;android-30"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "emulator" "tools" "platform-tools"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "system-images;android-30;google_apis;x86"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "extras;intel;Hardware_Accelerated_Execution_Manager"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "build-tools;30.0.2"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "platforms;android-30"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/latest/bin/platform-tools/
   - chmod +x ./gradlew
