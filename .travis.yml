@@ -7,36 +7,36 @@ jdk: openjdk9
 env:
   global:
   - ABI="google_apis;armeabi-v7a"
-  - BUILD_TOOLS_VERSION=28.0.3
+  - BUILD_TOOLS_VERSION=27.0.3
   - ADB_INSTALL_TIMEOUT=25
   - QEMU_AUDIO_DRV=none
   - TERM=dumb
   matrix:
-    - EMULATOR_API=16
-    - EMULATOR_API=19
+    - EMULATOR_API=25
+    - EMULATOR_API=24
 
-install:
-  - export ANDROID_HOME=~/android-sdk-linux
-  - wget -q "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip" -O android-sdk-tools.zip
-  - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
-  - rm android-sdk-tools.zip
-  - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
-  - yes | sdkmanager --update
-  - yes | sdkmanager --licenses
-  - ./gradlew dependencies || true
-  - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
-  - sdkmanager --list | head -20
-  - sdkmanager "build-tools;$BUILD_TOOLS_VERSION" "platforms;android-$28" > /dev/null
-  - sdkmanager "system-images;android-$EMULATOR_API;$ABI" > /dev/null
-  - sdkmanager --list | head -15
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+android:
+  components:
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    - platform-tools
+    - tools
 
-before_script:
-  - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_API;$ABI"
-  - $ANDROID_HOME/emulator/emulator -avd test -no-window
-  - adb shell input keyevent 82
+    # The BuildTools version used by your project
+    - build-tools-27.0.3
+
+    # The SDK version used to compile your project
+    - android-27
+
+    # Additional components
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-19
+
+
+before_install:
+  - yes | sdkmanager "platforms;android-27"
 
 script:
-  - ./gradlew connectedAndroidTest -PdisablePreDex
+    - ./gradlew assembleDebug
