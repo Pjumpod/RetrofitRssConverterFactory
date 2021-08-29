@@ -34,8 +34,8 @@ before_script:
   - popd
   - ls -l ${ANDROID_HOME}
   - ls -l ${ANDROID_HOME}/cmdline-tools/
-  - mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/lastest
-  - ls -l ${ANDROID_HOME}/cmdline-tools/lastest/bin/
+  - mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest
+  - ls -l ${ANDROID_HOME}/cmdline-tools/latest/bin/
   - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/latest/bin/
   - chmod +x ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager
   - sdkmanager --version
