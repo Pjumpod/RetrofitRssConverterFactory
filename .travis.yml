@@ -5,7 +5,15 @@ dist: Focal
 jdk: 
   openjdk11
   oraclejdk11
-
+global:
+  - ABI="google_apis;armeabi-v7a"
+  - ADB_INSTALL_TIMEOUT=25
+  - QEMU_AUDIO_DRV=none
+  - TERM=dumb
+  matrix:
+    - EMULATOR_API=19
+    - EMULATOR_API=25
+    
 android:
   licenses:
     - 'android-sdk-preview-license-.+'
@@ -19,8 +27,6 @@ android:
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-  matrix:
-    - EMULATOR_API=25
  
 before_script:
   - sudo apt-get update --yes
@@ -41,7 +47,8 @@ before_script:
   - set +o pipefail
   - yes | sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - set -o pipefail
-  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "platforms;android-25"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "platforms;android-$EMULATOR_API;$ABI"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "system-images;android-$EMULATOR_API;$ABI"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "platform-tools"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "build-tools;30.0.2"
   - export PATH=$PATH:${ANDROID_HOME}/platform-tools/
