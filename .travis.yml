@@ -45,7 +45,6 @@ before_script:
   - set -o pipefail
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "emulator" "tools" "platform-tools"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "system-images;android-30;google_apis;x86"
-  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "extras;intel;Hardware_Accelerated_Execution_Manager"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "build-tools;30.0.2"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "platforms;android-30"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
