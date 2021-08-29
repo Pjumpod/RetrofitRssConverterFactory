@@ -40,7 +40,7 @@ before_script:
   - chmod +x ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager
   - sdkmanager --version
   - set +o pipefail
-  - yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
+  - yes | sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - set -o pipefail
   - sdkmanager --sdk_root=${ANDROID_HOME} "platforms;android-${ANDROID_COMPILE_SDK}"
   - sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools"
