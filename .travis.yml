@@ -24,6 +24,7 @@ before_script:
   - sudo apt-get update --yes
   - sudo apt-get install --yes wget tar unzip lib32stdc++6 lib32z1
   - export ANDROID_HOME=${PWD}/android-home
+  - export ANDROID_SDK_ROOT=$ANDROID_HOME
   - export HERE=${PWD}
   - mkdir .android
   - touch .android/repositories.cfg
@@ -51,7 +52,6 @@ before_script:
   - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/latest/bin/platform-tools/
   - chmod +x ./gradlew
   - cd ${ANDROID_HOME}/cmdline-tools/latest/bin/
-  - export sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/
   - ls -l
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --list
   - cd $HERE
