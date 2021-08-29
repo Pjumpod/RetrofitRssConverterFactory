@@ -34,8 +34,8 @@ internal class XMLParser : DefaultHandler() {
     override fun startElement(uri: String, localName: String, qName: String,
                               attributes: Attributes?) {
         elementOn = true
-        Log.w("StartElement", localName.toLowerCase() + " " + ignorecontent.toString())
-        when (localName.toLowerCase()) {
+        Log.w("StartElement", localName.lowercase() + " " + ignorecontent.toString())
+        when (localName.lowercase()) {
             ITEM, ARTICLES -> if (ignorecontent == false) {rssItem = RssItem()}
             TITLE -> if (!qName.contains(MEDIA)) {
                 if (ignorecontent == false) {
@@ -61,25 +61,25 @@ internal class XMLParser : DefaultHandler() {
             rcmArticle, PUBLISHER, COPYRIGHT -> {
                 ignorecontent = true
                 tmpstring = EMPTY_STRING
-                Log.w("ignoreContent", localName.toLowerCase() + " true")
+                Log.w("ignoreContent", localName.lowercase() + " true")
                 parsingtmp = true
             }
         }
 
         if (attributes != null) {
             val url = attributes.getValue(URL)
-            if (url != null && !url.isEmpty() && (url.contains("jpg") || url.contains("gif") || url.contains("bmp") || url.contains("png"))) {
+            if (url != null && url.isNotEmpty() && (url.contains("jpg") || url.contains("gif") || url.contains("bmp") || url.contains("png"))) {
                 image = url
-                Log.w("get image: ", image)
+                Log.w("get image: ", image!!)
             }
         }
 
-        if (localName.toLowerCase() == "image") {
+        if (localName.lowercase() == "image") {
             Log.w("come here: ", "Yes")
             val href:String? = attributes?.getValue(HREF)
-            if (href != null && !href.isEmpty() && href.contains("jpg") ) {
+            if (href != null && href.isNotEmpty() && href.contains("jpg") ) {
                 image = href
-                Log.w("come here too: ", image)
+                Log.w("come here too: ", image!!)
             }
         }
 
@@ -88,21 +88,21 @@ internal class XMLParser : DefaultHandler() {
     @Throws(SAXException::class)
     override fun endElement(uri: String, localName: String, qName: String) {
         elementOn = false
-        Log.w("endElement", localName.toLowerCase() + " " + ignorecontent.toString())
+        Log.w("endElement", localName.lowercase() + " " + ignorecontent.toString())
 
-        when (localName.toLowerCase()) {
+        when (localName.lowercase()) {
             rcmArticle, PUBLISHER, COPYRIGHT -> {
                 ignorecontent = false
                 parsingtmp = false
                 elementValue = EMPTY_STRING
                 tmpstring = EMPTY_STRING
-                Log.w("tmpString", tmpstring)
-                Log.w("ignoreContent", localName.toLowerCase() + " false")
+                Log.w("tmpString", tmpstring!!)
+                Log.w("ignoreContent", localName.lowercase() + " false")
             }
         }
 
         if (rssItem != null) {
-            when (localName.toLowerCase()) {
+            when (localName.lowercase()) {
                 ITEM, ARTICLES -> {
                     if (ignorecontent == false) {
                         rssItem = RssItem()
@@ -122,13 +122,13 @@ internal class XMLParser : DefaultHandler() {
                         }
                         Log.w("final title: ", title)
                         if (description != null) {
-                            Log.w("final desc: ", description)
+                            Log.w("final desc: ", description!!)
                         }
                         if (link != null) {
-                            Log.w("final link: ", link)
+                            Log.w("final link: ", link!!)
                         }
                         if (image != null) {
-                            Log.w("final image: ", image)
+                            Log.w("final image: ", image!!)
                         }
                         link = EMPTY_STRING
                         image = null
@@ -150,15 +150,15 @@ internal class XMLParser : DefaultHandler() {
                             parsingLink = false
                             elementValue = EMPTY_STRING
                             link = removeNewLine(link)
-                            Log.w("link2", link)
+                            Log.w("link2", link!!)
                         }
                     }
                 IMAGE, URL, THUMBNAIL ->
                     if (ignorecontent == false) {
                         if (elementValue != null && elementValue?.isNotEmpty() == true) {
-                            if (elementValue?.toLowerCase()!!.contains("http")) {
+                            if (elementValue?.lowercase()!!.contains("http")) {
                                 image = elementValue
-                                Log.w("image2", image)
+                                Log.w("image2", image!!)
                             }
                         }
                     }
@@ -167,7 +167,7 @@ internal class XMLParser : DefaultHandler() {
                     if (ignorecontent == false) {
                         parsingDescription = false
                         elementValue = EMPTY_STRING
-                        Log.w("des2", description)
+                        Log.w("des2", description!!)
                     }
                 }
                 SYSBOL -> { Log.w("move on", "gogo")}
@@ -207,8 +207,8 @@ internal class XMLParser : DefaultHandler() {
      * @return Image url
      */
     private fun getImageSourceFromDescription(description: String?): String? {
-        Log.w("see here",description)
-        if (description?.contains("<img") == true && description.contains("src")) {
+        Log.w("see here",description!!)
+        if (description.contains("<img") && description.contains("src")) {
             val parts = description.split("src=\"".toRegex())
                     .dropLastWhile { it.isEmpty() }
                     .toTypedArray()
@@ -244,7 +244,7 @@ internal class XMLParser : DefaultHandler() {
         private const val OriginLink = "feedburner:origlink"
         private const val URL = "url"
         private const val HREF = "href"
-        private const val SRC = "src"
+        //private const val SRC = "src"
         private const val IMAGE = "image"
         private const val PUBLISH_DATE = "pubdate"
         private const val PUBLISH_TIME = "publishTime"

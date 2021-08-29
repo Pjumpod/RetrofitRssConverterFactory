@@ -1,7 +1,7 @@
 package me.toptas.rssconvertersample
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         //var URLfeed = "https://www.moneybuffalo.in.th/category/%E0%B8%AB%E0%B8%B8%E0%B9%89%E0%B8%99/feed"
         //var URLfeed = "http://feeds.feedburner.com/Setorth-Xd"
-        var URLfeed = "http://news.thaipbs.or.th/rss/news/economy"
+        val URLfeed = "https://feeds.soundcloud.com/users/soundcloud:users:940129642/sounds.rss"
         supportFragmentManager
                 .beginTransaction()
                 .add(R.id.rlContainer, RssFragment.newInstance( URLfeed))

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview"
@@ -10,7 +10,8 @@
     android:layout_marginLeft="@dimen/default_margin"
     android:layout_marginRight="@dimen/default_margin"
     android:layout_marginTop="@dimen/default_margin"
-    android:clickable="true">
+    android:clickable="true"
+    android:focusable="true">
 
 
     <RelativeLayout
@@ -24,8 +25,9 @@
             android:id="@+id/ivThumb"
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:scaleType="centerCrop" />
-
+            android:scaleType="centerCrop"
+            android:contentDescription="TODO"
+            tools:ignore="ContentDescription,HardcodedText" />
 
         <RelativeLayout
             android:id="@+id/llTextContainer"
@@ -37,7 +39,9 @@
             android:paddingBottom="5dp"
             android:paddingLeft="8dp"
             android:paddingRight="4dp"
-            android:paddingTop="5dp">
+            android:paddingTop="5dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="4dp">
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -46,7 +50,8 @@
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="#ffffff"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:targetApi="jelly_bean" />
 
             <TextView
                 android:id="@+id/tvPubDate"
@@ -56,7 +61,8 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif-light"
                 android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:targetApi="jelly_bean" />
 
             <!--<RelativeLayout
                 android:id="@+id/rl_fav"
@@ -82,4 +88,4 @@
 
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

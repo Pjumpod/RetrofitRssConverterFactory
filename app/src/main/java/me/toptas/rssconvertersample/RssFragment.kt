@@ -1,17 +1,19 @@
 package me.toptas.rssconvertersample
 
 
+//import android.support.v4.widget.SwipeRefreshLayout
+//import android.support.v7.widget.LinearLayoutManager
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_rss.*
 import me.toptas.rssconverter.RssConverterFactory
 import me.toptas.rssconverter.RssFeed
@@ -29,7 +31,6 @@ class RssFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, RssItemsAd
 
     private var feedUrl: String? = null
     private lateinit var mAdapter: RssItemsAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
