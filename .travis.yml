@@ -1,42 +1,31 @@
 sudo: required
-language: generic
 
-dist: trusty
-jdk: openjdk9
+language: android
+jdk: oraclejdk8
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - $HOME/.android/build-cache
 
 env:
-  global:
-  - ABI="google_apis;armeabi-v7a"
-  - BUILD_TOOLS_VERSION=27.0.3
-  - ADB_INSTALL_TIMEOUT=25
-  - QEMU_AUDIO_DRV=none
-  - TERM=dumb
-  matrix:
-    - EMULATOR_API=25
-    - EMULATOR_API=24
+ global:
+ - ANDROID_API=26
+ - ANDROID_BUILD_TOOLS=26.0.2
 
 android:
   components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-    - platform-tools
-    - tools
-
-    # The BuildTools version used by your project
-    - build-tools-27.0.3
-
-    # The SDK version used to compile your project
-    - android-27
-
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - addon-google_apis-google-19
-
-
-before_install:
-  - yes | sdkmanager "platforms;android-27"
+  - tools
+  - tools # Running this twice get's the latest build tools (https://github.com/codepath/android_guides/wiki/Setting-up-Travis-CI)
+  - platform-tools
+  - android-${ANDROID_API}
+  - build-tools-${ANDROID_BUILD_TOOLS}
+  - extra
 
 script:
-    - ./gradlew assembleDebug
+- ./gradlew clean test build
