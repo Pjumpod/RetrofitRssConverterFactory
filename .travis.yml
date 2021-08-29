@@ -49,7 +49,8 @@ before_script:
   - export PATH=$PATH:${ANDROID_HOME}/platform-tools/
   - chmod +x ./gradlew
   - cd ${ANDROID_HOME}/cmdline-tools/latest/bin/
-  - echo no | ./avdmanager create avd --force -n test -k "system-images;android-30;google_apis;x86" --device "Pixel_4"
+  - ls -l ${ANDROID_HOME}/platform-tools/
+  - echo no | ./avdmanager create avd -n test -k "system-images;android-30;google_apis;x86" --device "Pixel_4" -b x86 -c 100M -d 7 -f
   - cd $HERE
   - $ANDROID_HOME/emulator/emulator -avd test -no-window &
   - bash android-wait-for-emulator
