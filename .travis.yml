@@ -25,6 +25,8 @@ before_script:
   - sudo apt-get install --yes wget tar unzip lib32stdc++6 lib32z1
   - export ANDROID_HOME=${PWD}/android-home
   - export HERE=${PWD}
+  - mkdir .android
+  - touch .android/repositories.cfg
   - install -d $ANDROID_HOME
   - wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
   - pushd $ANDROID_HOME
