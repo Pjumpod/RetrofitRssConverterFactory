@@ -47,7 +47,6 @@ before_install:
   - chmod +x gradlew
 
 install: 
-- yes | sdkmanager --update
 - ./gradlew dependencies || true
 
 script:
