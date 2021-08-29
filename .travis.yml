@@ -5,7 +5,8 @@ dist: Focal
 jdk: 
   openjdk11
   oraclejdk11
-global:
+env:
+  global:
   - ABI="google_apis;armeabi-v7a"
   - ADB_INSTALL_TIMEOUT=25
   - QEMU_AUDIO_DRV=none
