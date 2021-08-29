@@ -1,7 +1,7 @@
 os: linux
 dist: trusty
 language: android
-jdk: oraclejdk8
+jdk: oraclejdk1
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
