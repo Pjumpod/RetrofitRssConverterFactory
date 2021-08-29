@@ -43,13 +43,15 @@ before_script:
   - yes | ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - set -o pipefail
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "tools"
-  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "system-images;android-30;google_apis;x86"
-  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "build-tools;30.0.2"
-  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "platforms;android-30"
+  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install --license "system-images;android-30;google_apis;x86"
+  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install --license "build-tools;30.0.2"
+  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install --license "platforms;android-30"
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/latest/bin/platform-tools/
   - cd ${ANDROID_HOME}/cmdline-tools/latest/bin/
   - ls -l
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n24333f8a63b6825ea9c5514f83c2829b004d1fee" > "licenses/android-sdk-license"
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --list
   - cd $HERE
   - chmod +x ./gradlew
