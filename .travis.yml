@@ -47,7 +47,7 @@ before_script:
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "build-tools;30.0.2"
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "platforms;android-31"
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "platforms;android-30"
-  - yes | ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
+  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/latest/bin/platform-tools/
   - cd ${ANDROID_HOME}/cmdline-tools/latest/bin/
   - ls -l
