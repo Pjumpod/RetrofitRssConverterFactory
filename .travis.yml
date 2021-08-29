@@ -25,6 +25,7 @@ install:
   - yes | sdkmanager --update
   - yes | sdkmanager --licenses
   - ./gradlew dependencies || true
+  - ./gradle assemble || true
   - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
   - sdkmanager --list | head -20
   - sdkmanager "build-tools;$BUILD_TOOLS_VERSION" "platforms;android-$28" > /dev/null
