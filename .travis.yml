@@ -2,20 +2,31 @@ sudo: required
 language: generic
 
 dist: trusty
-jdk: openjdk11
+jdk: 
+  openjdk11
+  oraclejdk11
 
-env:
-  global:
-  - ABI="google_apis;armeabi-v7a"
-  - BUILD_TOOLS_VERSION=28.0.3
-  - ADB_INSTALL_TIMEOUT=25
-  - QEMU_AUDIO_DRV=none
-  - TERM=dumb
-  matrix:
-    - EMULATOR_API=16
-    - EMULATOR_API=19
-    - EMULATOR_API=25
-
+android:
+  licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+ 
+  components:
+    - tools
+    - build-tools-30.0.2
+    - tools
+    - android-25
+    - android-22
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-22
+ 
+before_install:
+  - chmod +x gradlew
+  - yes | sdkmanager "platforms;android-25"
+  
 install:
   - export ANDROID_HOME=~/android-sdk-linux
   - wget -q "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip" -O android-sdk-tools.zip
