@@ -27,6 +27,7 @@ before_script:
   - export HERE=${PWD}
   - mkdir .android
   - touch .android/repositories.cfg
+  - mkdir .android/avd
   - install -d $ANDROID_HOME
   - wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
   - pushd $ANDROID_HOME
