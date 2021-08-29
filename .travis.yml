@@ -48,8 +48,9 @@ before_script:
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - export PATH=$PATH:${ANDROID_HOME}/platform-tools/
   - chmod +x ./gradlew
+  - cd ${ANDROID_HOME}
+  - find . -type f
   - cd ${ANDROID_HOME}/cmdline-tools/latest/bin/
-  - ls -l ${ANDROID_HOME}/platform-tools/
   - echo no | ./avdmanager create avd -n test -k "system-images;android-30;google_apis;x86" --device "Pixel_4" -b x86 -c 100M -d 7 -f
   - cd $HERE
   - $ANDROID_HOME/emulator/emulator -avd test -no-window &
