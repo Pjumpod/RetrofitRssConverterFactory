@@ -5,15 +5,6 @@ dist: Focal
 jdk: 
   openjdk11
   oraclejdk11
-env:
-  global:
-  - ABI="google_apis;armeabi-v7a"
-  - ADB_INSTALL_TIMEOUT=25
-  - QEMU_AUDIO_DRV=none
-  - TERM=dumb
-  matrix:
-    - EMULATOR_API=19
-    - EMULATOR_API=25
     
 android:
   licenses:
@@ -49,13 +40,13 @@ before_script:
   - yes | sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - set -o pipefail
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "build-tools;30.0.2"
-  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "platforms;android-$28"
-  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "system-images;android-$EMULATOR_API;$ABI"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "platforms;android-$30"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "system-images;android-30;google_apis;armeabi-v7a"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "platform-tools"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "build-tools;30.0.2"
   - export PATH=$PATH:${ANDROID_HOME}/platform-tools/
   - chmod +x ./gradlew
-  - echo no | avdmanager create avd --force -n test -k "system-images;android-$EMULATOR_API;$ABI"
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-30;google_apis;armeabi-v7a"
   - $ANDROID_HOME/emulator/emulator -avd test -no-window &
   - bash android-wait-for-emulator
   - adb shell input keyevent 82
