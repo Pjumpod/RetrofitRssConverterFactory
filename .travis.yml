@@ -45,7 +45,9 @@ before_install:
   - chmod +x gradlew
   - yes | sdkmanager "platforms;android-28"
 
-install: skip
+install: 
+- yes | sdkmanager --update
+- ./gradlew dependencies || true
 
 script:
   - ./gradlew build --scan -s
