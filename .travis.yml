@@ -43,11 +43,15 @@ before_script:
   - yes | ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - set -o pipefail
   - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "tools"
-  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install --licenses "system-images;android-30;google_apis;x86"
-  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install --licenses "build-tools;30.0.2"
-  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install --licenses "platforms;android-31"
-  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install --licenses "platforms;android-30"
-  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
+  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "system-images;android-30;google_apis;x86"
+  - yes | ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses "system-images;android-30;google_apis;x86"
+  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "build-tools;30.0.2"
+  - yes | ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses "build-tools;30.0.2"
+  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "platforms;android-31"
+  - yes |./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses "platforms;android-31"
+  - ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --install "platforms;android-30"
+  - yes |./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses "platforms;android-30"
+  - yes | ./sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --licenses
   - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/latest/bin/platform-tools/
   - cd ${ANDROID_HOME}/cmdline-tools/latest/bin/
   - ls -l
