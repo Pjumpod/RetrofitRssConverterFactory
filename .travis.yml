@@ -44,6 +44,7 @@ before_script:
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "system-images;android-30;google_apis;x86"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "platform-tools"
   - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ "build-tools;30.0.2"
+  - sdkmanager --sdk_root=${ANDROID_HOME}/cmdline-tools/latest/bin/ --license
   - export PATH=$PATH:${ANDROID_HOME}/platform-tools/
   - chmod +x ./gradlew
   - echo no | avdmanager create avd --force -n test -k "system-images;android-30;google_apis;x86"
