@@ -24,7 +24,6 @@ before_script:
   - mkdir .android
   - touch .android/repositories.cfg
   - mkdir .android/avd
-  - sdkmanager --version
   - sdkmanager --sdk_root=/usr/local/android-sdk/tools/bin/ --install "tools"
   - sdkmanager --sdk_root=/usr/local/android-sdk/tools/bin/ --install "system-images;android-30;google_apis;x86"
   - sdkmanager --sdk_root=/usr/local/android-sdk/tools/bin/ --install "build-tools;30.0.2"
