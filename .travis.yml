@@ -25,7 +25,8 @@ android:
  
 before_install:
   - chmod +x gradlew
-  - yes | sdkmanager "platforms;android-25"
+  - chmod +x android-wait-for-emulator
+  - echo $JAVA_HOME
   
 install:
   - export ANDROID_HOME=~/android-sdk-linux
