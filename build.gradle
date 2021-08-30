@@ -109,6 +109,7 @@ task cleanBuildPublishLocal(type: GradleBuild) {
 }
 */
 /*
+
 task writeNewPom {
         doLast {
             pom {
