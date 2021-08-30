@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
 //apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion 31
     defaultConfig {
-        applicationId "me.toptas.rssconvertersample"
+        applicationId "com.github.pjumpod"
         minSdkVersion 14
         targetSdkVersion 31
         versionCode 1
