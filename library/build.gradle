@@ -42,7 +42,7 @@ dependencies {
     androidTestImplementation('androidx.test.espresso:espresso-core:3.4.0', {
         exclude group: 'com.androidx.support', module: 'support-annotations'
     })
-    api project(':library')
+    implementation project(':library')
 }
 
 repositories {
