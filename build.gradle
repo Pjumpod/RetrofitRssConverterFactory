@@ -29,6 +29,27 @@ allprojects {
     }
 }
 
+/* task writeNewPom {
+        doLast {
+            pom {
+                project {
+                    groupId 'com.github.pjumpod'
+                    artifactId 'RetrofitRssConverterFactory'
+                    version '1.0.1'
+                    inceptionYear '2021'
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            distribution 'repo'
+                        }
+                    }
+                }
+            }.writeTo("$buildDir/RetrofitRssConverterFactory-1.0.1.xml")
+        }
+    }
+*/
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
