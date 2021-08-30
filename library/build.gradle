@@ -43,7 +43,6 @@ dependencies {
         exclude group: 'com.androidx.support', module: 'support-annotations'
     })
     api project(':library')
-
 }
 
 repositories {
