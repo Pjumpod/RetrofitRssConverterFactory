@@ -72,4 +72,5 @@ jobs:
     if: tag IS present
     env: CACHING=false
     script:
-      - "./gradlew assembleRelease"
+     # - "./gradlew assembleRelease"
+     - "./gradlew tasks --all"
