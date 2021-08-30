@@ -1,4 +1,4 @@
-# Retrofit2 Rss Converter Factory [![Status](https://app.travis-ci.com/Pjumpod/RetrofitRssConverterFactory.svg?branch=master)](https://app.travis-ci.com/Pjumpod/RetrofitRssConverterFactory.svg?branch=master) [![](https://jitpack.io/v/pjumpod/RetrofitRssConverterFactory.svg)](https://jitpack.io/#pjumpod/RetrofitRssConverterFactory) [![API](https://img.shields.io/badge/API-10%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=10)
+# Retrofit2 Rss Converter Factory [![Status](https://app.travis-ci.com/Pjumpod/RetrofitRssConverterFactory.svg?branch=master)](https://app.travis-ci.com/Pjumpod/RetrofitRssConverterFactory.svg?branch=master) [![](https://jitpack.io/v/Pjumpod/RetrofitRssConverterFactory.svg)](https://jitpack.io/#Pjumpod/RetrofitRssConverterFactory) [![API](https://img.shields.io/badge/API-10%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=10)
 
 A Retrofit2 converter which parses Rss feeds.
 
