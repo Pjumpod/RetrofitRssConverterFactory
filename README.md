@@ -70,3 +70,9 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+```
+Found Error with jitpack after upgrade gradle to 7.0.2
+under wait for jitpack reply.
+https://github.com/jitpack/jitpack.io/issues/4706
+```
