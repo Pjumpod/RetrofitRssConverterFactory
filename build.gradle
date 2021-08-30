@@ -25,10 +25,13 @@ allprojects {
         mavenCentral()
         //noinspection JcenterRepositoryObsolete
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+        }
     }
 }
 
-/* task writeNewPom {
+task writeNewPom {
         doLast {
             pom {
                 project {
@@ -47,7 +50,6 @@ allprojects {
             }.writeTo("$buildDir/RetrofitRssConverterFactory-1.0.1.xml")
         }
     }
-*/
 
 task clean(type: Delete) {
     delete rootProject.buildDir
