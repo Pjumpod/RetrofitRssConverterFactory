@@ -8,9 +8,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //var URLfeed = "https://www.moneybuffalo.in.th/category/%E0%B8%AB%E0%B8%B8%E0%B9%89%E0%B8%99/feed"
-        //var URLfeed = "http://feeds.feedburner.com/Setorth-Xd"
-        val URLfeed = "https://tnsthinkwebcontent.thanachartsec.co.th/feed/"
+        //val URLfeed = "https://www.moneybuffalo.in.th/category/%E0%B8%AB%E0%B8%B8%E0%B9%89%E0%B8%99/feed"
+        //val URLfeed = "http://feeds.feedburner.com/Setorth-Xd"
+        val URLfeed = "https://knowledge.bualuang.co.th/article-categories/research/feed/"
         supportFragmentManager
                 .beginTransaction()
                 .add(R.id.rlContainer, RssFragment.newInstance( URLfeed))

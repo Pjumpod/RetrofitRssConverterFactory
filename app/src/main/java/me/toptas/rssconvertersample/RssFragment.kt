@@ -4,9 +4,11 @@ package me.toptas.rssconvertersample
 //import android.support.v4.widget.SwipeRefreshLayout
 //import android.support.v7.widget.LinearLayoutManager
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,19 +63,22 @@ class RssFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, RssItemsAd
                 .baseUrl("https://github.com")
                 .addConverterFactory(RssConverterFactory.create())
                 .build()
-
+        Log.w("Test","Show loading")
         showLoading()
         val service = retrofit.create(RssService::class.java)
-
+        Log.w("Test","Get retrofit")
+        Log.w("Test",feedUrl.toString())
         feedUrl?.apply {
             service.getRss(this)
                     .enqueue(object : Callback<RssFeed> {
                         override fun onResponse(call: Call<RssFeed>, response: Response<RssFeed>) {
+                            Log.w("Loading RSS", "Loading")
                             onRssItemsLoaded(response.body()!!.items!!)
                             hideLoading()
                         }
 
                         override fun onFailure(call: Call<RssFeed>, t: Throwable) {
+                            Log.w("Failure","Failure")
                             Toast.makeText(activity, "Failed to fetchRss RSS feed!", Toast.LENGTH_SHORT).show()
 
                         }
@@ -85,7 +90,9 @@ class RssFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, RssItemsAd
      * Loads fetched [RssItem] list to RecyclerView
      * @param rssItems
      */
+    @SuppressLint("NotifyDataSetChanged")
     fun onRssItemsLoaded(rssItems: List<RssItem>) {
+        Log.w("Test",rssItems.toString())
         mAdapter.setItems(rssItems)
         mAdapter.notifyDataSetChanged()
         if (recyclerView.visibility != View.VISIBLE) {
@@ -122,6 +129,7 @@ class RssFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, RssItemsAd
      */
     override fun onItemSelected(rssItem: RssItem) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(rssItem.link))
+        Log.w("link",rssItem.link!!)
         startActivity(intent)
     }
 
@@ -136,6 +144,7 @@ class RssFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, RssItemsAd
         fun newInstance(feedUrl: String): RssFragment {
             val rssFragment = RssFragment()
             val bundle = Bundle()
+            Log.w("NEW I","New Instance")
             bundle.putSerializable(KEY_FEED, feedUrl)
             rssFragment.arguments = bundle
             return rssFragment

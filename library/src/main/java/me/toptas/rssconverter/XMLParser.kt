@@ -247,7 +247,7 @@ internal class XMLParser : DefaultHandler() {
     }
 
     private fun removeNewLine(s: String?): String {
-        return s?.replace("\n", "") ?: EMPTY_STRING
+        return s?.replace("\n", "")?.replace("\r","") ?: EMPTY_STRING
     }
 
     companion object {
