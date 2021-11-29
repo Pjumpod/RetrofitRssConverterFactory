@@ -22,6 +22,7 @@ internal class XMLParser : DefaultHandler() {
     private var image: String? = null
     private var date: String? = null
     private var description: String? = null
+    private var encoded: String? = null
 
     private var ignorecontent: Boolean? = false
     private var tmpstring: String? = null
@@ -47,6 +48,12 @@ internal class XMLParser : DefaultHandler() {
                 if (ignorecontent == false) {
                     parsingDescription = true
                     description = EMPTY_STRING
+                }
+            }
+            ENCODED -> {
+                if (ignorecontent == false) {
+                    parsingDescription = true
+                    encoded = EMPTY_STRING
                 }
             }
             LINK, OriginLink, SOURCEURL -> {
@@ -113,9 +120,13 @@ internal class XMLParser : DefaultHandler() {
                             //Log.w("pic_1: ", it.image)
                             it.publishDate = date
                             it.description = description
+                            it.encoded  = encoded
 
                             if (image == null && description != null && getImageSourceFromDescription(description) != null) {
                                 it.image = getImageSourceFromDescription(description!!)
+                            }
+                            if (image == null && encoded != null && getImageSourceFromDescription(encoded) != null) {
+                                it.image = getImageSourceFromDescription(encoded!!)
                             }
                             //Log.w("pic_2: ", it.image)
                             items.add(it)
@@ -167,10 +178,16 @@ internal class XMLParser : DefaultHandler() {
                     if (ignorecontent == false) {
                         parsingDescription = false
                         elementValue = EMPTY_STRING
-                        Log.w("des2", description!!)
                     }
                 }
                 SYSBOL -> { Log.w("move on", "gogo")}
+                ENCODED -> {
+                    if (ignorecontent == false) {
+                        parsingDescription = false
+                        elementValue = EMPTY_STRING
+                        Log.w("encoded", description!!)
+                    }
+                }
 
             }
         }
@@ -209,6 +226,7 @@ internal class XMLParser : DefaultHandler() {
     private fun getImageSourceFromDescription(description: String?): String? {
         Log.w("see here",description!!)
         if (description.contains("<img") && description.contains("src")) {
+            Log.w("|--","found img")
             val parts = description.split("src=\"".toRegex())
                     .dropLastWhile { it.isEmpty() }
                     .toTypedArray()
@@ -257,5 +275,6 @@ internal class XMLParser : DefaultHandler() {
         private const val COPYRIGHT = "copyright"
         private const val THUMBNAIL = "thumbnail"
         private const val SYSBOL = "sysbol"
+        private const val ENCODED = "encoded"
     }
 }

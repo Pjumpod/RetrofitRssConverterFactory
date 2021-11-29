@@ -19,7 +19,7 @@ class RssItem : Serializable {
     var publishDate: String? = null
     var description: String? = null
     var origLink: String? = null
-
+    var encoded: String? = null
 
     override fun toString(): String {
         val builder = StringBuilder()
