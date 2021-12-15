@@ -1,5 +1,6 @@
 package me.toptas.rssconverter
 
+import android.util.Log
 import java.io.Serializable
 
 /**
@@ -23,6 +24,7 @@ class RssItem : Serializable {
 
     override fun toString(): String {
         val builder = StringBuilder()
+        Log.w("Inside ToString", "1")
         if (title != null) {
             builder.append(title).append("\n")
         }

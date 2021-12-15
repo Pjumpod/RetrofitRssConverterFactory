@@ -66,7 +66,7 @@ class RssFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, RssItemsAd
         Log.w("Test","Show loading")
         showLoading()
         val service = retrofit.create(RssService::class.java)
-        Log.w("Test","Get retrofit")
+        Log.w("Test","Got retrofit")
         Log.w("Test",feedUrl.toString())
         feedUrl?.apply {
             service.getRss(this)
@@ -92,7 +92,7 @@ class RssFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, RssItemsAd
      */
     @SuppressLint("NotifyDataSetChanged")
     fun onRssItemsLoaded(rssItems: List<RssItem>) {
-        Log.w("Test",rssItems.toString())
+        Log.w("onRssItemsLoaded",rssItems.toString())
         mAdapter.setItems(rssItems)
         mAdapter.notifyDataSetChanged()
         if (recyclerView.visibility != View.VISIBLE) {
