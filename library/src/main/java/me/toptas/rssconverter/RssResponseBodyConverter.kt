@@ -1,10 +1,11 @@
 package me.toptas.rssconverter
 
 import android.util.Log
-import okhttp3.ResponseBody
 import org.xml.sax.InputSource
-import retrofit2.Converter
 import javax.xml.parsers.SAXParserFactory
+
+import okhttp3.ResponseBody
+import retrofit2.Converter
 
 
 internal class RssResponseBodyConverter : Converter<ResponseBody, RssFeed> {
@@ -13,12 +14,11 @@ internal class RssResponseBodyConverter : Converter<ResponseBody, RssFeed> {
         val rssFeed = RssFeed()
         try {
             val parser = XMLParser()
-            //val xmlValue = value.toString().replace("(?m)^[ \t]*\r?\n", "")
             val parserFactory = SAXParserFactory.newInstance()
             val saxParser = parserFactory.newSAXParser()
             val xmlReader = saxParser.xmlReader
             xmlReader.contentHandler = parser
-            val inputSource = InputSource(value.charStream())//xmlValue.reader())//value.charStream())
+            val inputSource = InputSource(value.charStream())
             try {
                 //Log.w("inputSource",inputSource.toString())
                 xmlReader.parse(inputSource)
