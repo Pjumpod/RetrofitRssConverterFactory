@@ -66,8 +66,8 @@ class RssFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, RssItemsAd
         Log.w("Test","Show loading")
         showLoading()
         val service = retrofit.create(RssService::class.java)
-        Log.w("Test","Get retrofit")
-        Log.w("Test",feedUrl.toString())
+        Log.w("A-Step","Get retrofit")
+        Log.w("A-Step",feedUrl.toString())
         feedUrl?.apply {
             service.getRss(this)
                     .enqueue(object : Callback<RssFeed> {

@@ -196,6 +196,7 @@ internal class XMLParser : DefaultHandler() {
     @Throws(SAXException::class)
     override fun characters(ch: CharArray, start: Int, length: Int) {
         val buff = String(ch, start, length)
+        Log.e("buffer",buff)
         if (elementOn) {
             if (buff.length > 2) {
                 elementValue = buff
@@ -247,6 +248,7 @@ internal class XMLParser : DefaultHandler() {
     }
 
     private fun removeNewLine(s: String?): String {
+        Log.e("Test",s.toString())
         return s?.replace("\n", "")?.replace("\r","") ?: EMPTY_STRING
     }
 

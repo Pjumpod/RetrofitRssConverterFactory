@@ -5,11 +5,11 @@ apply plugin: 'maven-publish'
 //apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.github.pjumpod"
         minSdkVersion 14
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 1
         versionName "$versionName"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -28,20 +28,20 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
     //implementation "com.android.support:appcompat-v7:31.0.0"
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.android.material:material:1.5.0'
     //implementation "com.androidx.support:design:31.0.0"
     //implementation "com.androidx.support:recyclerview-v7:31.0.0"
     //implementation "com.androidx.support:cardview-v7:31.0.0"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.test:core:1.4.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation("androidx.fragment:fragment:1.4.0")
-    implementation("androidx.fragment:fragment-ktx:1.4.0")
-    debugImplementation("androidx.fragment:fragment-testing:1.4.0")
+    implementation("androidx.fragment:fragment:1.4.1")
+    implementation("androidx.fragment:fragment-ktx:1.4.1")
+    debugImplementation("androidx.fragment:fragment-testing:1.4.1")
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
