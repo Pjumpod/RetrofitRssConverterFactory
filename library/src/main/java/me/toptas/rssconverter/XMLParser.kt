@@ -34,6 +34,8 @@ internal class XMLParser : DefaultHandler() {
     @Throws(SAXException::class)
     override fun startElement(uri: String, localName: String, qName: String,
                               attributes: Attributes?) {
+        val tracetest = removeNewLine(localName)
+        Log.e("START",tracetest)
         elementOn = true
         Log.w("StartElement", localName.lowercase() + " " + ignorecontent.toString())
         when (localName.lowercase()) {
@@ -196,6 +198,7 @@ internal class XMLParser : DefaultHandler() {
     @Throws(SAXException::class)
     override fun characters(ch: CharArray, start: Int, length: Int) {
         val buff = String(ch, start, length)
+
         Log.e("buffer",buff)
         if (elementOn) {
             if (buff.length > 2) {

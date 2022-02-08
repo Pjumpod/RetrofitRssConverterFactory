@@ -23,6 +23,7 @@ internal class RssResponseBodyConverter : Converter<ResponseBody, RssFeed> {
                 //Log.w("inputSource",inputSource.toString())
                 xmlReader.parse(inputSource)
             } catch(e: Exception) {
+                Log.e("error",e.message!!)
                 Log.e("error","XML Phase error")
             }
             val items = parser.items
